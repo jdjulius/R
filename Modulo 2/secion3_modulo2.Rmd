@@ -1,0 +1,61 @@
+---
+title: "secion3_modulo2"
+author: "julio"
+date: "11/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## LECUTRA DE DATOS
+
+# PREGUNTA 4
+
+```{r}
+rm(list =ls())
+
+library(readr)
+
+muestra <- read_csv("datos/muestra_total.csv")
+
+```
+# PREGUNTA 5
+
+
+```{r}
+rm(list =ls())
+
+library(readxl)
+
+```
+
+
+```{r}
+excel_sheets("datos/mu5.xls")
+
+```
+
+```{r}
+mortalidad_excel = read_excel("datos/mu5.xls", sheet = "Data", skip = 3)
+
+```
+
+```{r}
+mortalidad_excel
+```
+
+
+```{r}
+mortalidad_excel_SGH <- mortalidad_excel %>% 
+                        filter(`Country Name` %in% c("El Salvador", "Guatemala", "Honduras")) %>% 
+                        select(code = `Country Code`, contry = `Country Name`, `1960`, `1961` )
+mortalidad_excel_SGH
+```
+
+```{r}
+mortalidad_excel_SGH %>% knitr::kable()
+```
+
+

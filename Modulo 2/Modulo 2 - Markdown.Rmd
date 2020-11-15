@@ -1,0 +1,248 @@
+---
+title: "Modulo 2 - Markdown"
+author: "julio"
+date: "11/11/2020"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+
+A partir de los siguientes vectores, responda las siguientes preguntas:
+
+```{r}
+x1 <- c(10,8,13,9,11,14,6,4,12,7,5)
+y1 = c(8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68)
+```
+
+La media de x1 es `r mean(x1)`
+
+
+La suma de los elementos de la variable x1  es sum(x1)
+
+
+(a) Ordene los elementos del vector en orden creciente
+```{r}
+sort(x1)
+x1[order(x1)]
+```
+
+
+(b) Ordenar de forma decreciente
+
+```{r}
+sort(x1, decreasing = TRUE)
+x1[order(x1, decreasing = TRUE)]
+```
+
+
+(c) calculen las medias aritmeticas $x_1$ y $x_2$, usando la siguiente formula:
+
+$$\overline x = \frac{\sum_{i=1}^n x_i}{n}$$
+```{r}
+mean(x1)
+mean(y1)
+```
+
+
+(d) calcule las desviaciones estandar de $x_1$ y $x_2$
+
+$$ s = \sqrt{\frac{\sum_{i=1}^n (x_i - \overline x)^2}{n-1}} $$
+```{r}
+sd(x1)
+sd(y1)
+
+```
+
+(f) calcule la mediana de $x_1$
+
+```{r}
+median(x1)
+quantile(x1,0.5)
+```
+
+
+# pregunta 7 
+
+```{r}
+z = rnorm(10000)
+```
+
+```{r}
+skewness <- (sum((z -mean(z))^3)/length(z))/(sum((z -mean(z))^2)/length(z))^1.5
+skewness
+```
+```{r}
+library(summarytools)
+descr(z)
+```
+# pregunta 9
+
+(a)
+
+```{r}
+
+lista_A = list(a = seq(8,36,4), b = list("hola","como estas"), c= 5)
+lista_A
+```
+
+(b)
+
+```{r}
+lista_A
+str(lista_A)
+```
+
+(c)
+
+```{r}
+lista_A[1:2]
+lista_A[c("a","b")]
+```
+
+(d)
+```{r}
+lista_A[["b"]][2]
+```
+
+#PREGUNTA 10
+
+```{r}
+library(tibble)
+tb <- tibble(x1 = c(10, 8, 13, 9, 11),
+             x2 = 5,
+             x3 = x1 + x2,
+             x4 = list(1:3, 3:4, 1:5, 2:7, 3))
+tb
+```
+
+
+```{r}
+library(dplyr)
+glimpse(tb)
+```
+
+
+#PREGUNTA 11
+
+ZONA  | hombres |  mujeres
+----- | ------- | --------
+A     | 800     |  700
+B     | 200     |  300
+C     | 700     |  600
+D     | 300     |  400
+
+
+```{r}
+library(tibble)
+
+muestra_total_tb <- tibble(zona = c("A","B","C","D"),
+                           hombres = c(800,200,700,300),
+                           mujeres = c(700,300,600,400))
+
+```
+
+```{r}
+muestra_total_tb
+```
+
+
+```{r}
+summary(muestra_total_tb)
+```
+
+
+```{r}
+library(dplyr)
+glimpse(muestra_total_tb)
+```
+
+```{r}
+str(muestra_total_tb)
+```
+
+```{r}
+head(muestra_total_tb, n = 3)
+slice_head(muestra_total_tb, n = 3)
+```
+
+```{r}
+tail(muestra_total_tb, n = 2)
+slice_tail(muestra_total_tb, n = 2)
+```
+
+```{r}
+#DPYR
+
+muestra_total_tb %>% slice_head(n = 3)
+muestra_total_tb %>% slice_tail(n = 2)
+```
+
+
+
+(f)
+
+```{r}
+muestra_total_tb %>% select(zona,mujeres)
+muestra_total_tb %>% select(-(hombres))
+```
+
+(g)
+
+```{r}
+muestra_total_tb %>% filter(zona == "A" | zona == "C")
+muestra_total_tb %>% filter(zona %in% c("A", "C"))
+```
+
+
+
+```{r}
+
+muestra_total_tb %>% 
+  filter(zona %in% c("A", "C")) %>% 
+  select(zona,mujeres)
+
+```
+
+
+```{r}
+muestra_total_tb %>% 
+  mutate(muestra_tot = hombres + mujeres,
+         porcentaje_hombres = (hombres/(sum(hombres))*100))
+
+```
+
+
+
+```{r}
+library(dplyr)
+
+muestra_total_tb <- muestra_total_tb %>% 
+  mutate(muestra_tot = hombres + mujeres,
+         porcentaje_hombres = (hombres/(sum(hombres))*100))
+
+```
+
+
+
+```{r}
+muestra_total_tb %>% 
+  mutate(mayor = if_else(muestra_tot > 1000,"alto","bajo"))
+
+```
+
+(j) Guardar un archivo muestra_total.csv
+
+```{r}
+library(readr)
+write_csv(muestra_total_tb, path = "datos/muestra_total.csv")
+```
+
+
+
