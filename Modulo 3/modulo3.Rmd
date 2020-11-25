@@ -1,0 +1,23 @@
+---
+title: "Modulo3"
+author: "julio"
+date: "25/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(WDI)
+library(dplyr)
+```
+
+
+```{r}
+wbData <- WDI(
+  indicator= c("SP.POP.TOTL", "SP.DYN.LEOO.IN", "NY.GDP.PCAP.PP.CD", "SI.POV.GINI"), contry = "all", extra = TRUE, start = 1960, end=2019
+)
+```
