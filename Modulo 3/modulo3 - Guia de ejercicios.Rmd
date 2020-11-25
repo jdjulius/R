@@ -1,0 +1,132 @@
+---
+title: "Modulo3 guia de Ejercicios"
+author: "julio"
+date: "25/11/2020"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+```
+
+```{r}
+wbData1 <- readRDS("datos/wbData2019.rds")
+
+
+```
+
+## pregunta 1
+
+
+```{r}
+wbData2 <- wbData1 %>% rename(population = SP.POP.TOTL,
+                              lifeExpectancy = SP.DYN.LE00.IN,
+                              gdppc = NY.GDP.PCAP.PP.CD,
+                              gini = SI.POV.GINI)
+
+```
+
+
+## pregunta 2
+
+
+```{r}
+wbData2 <- wbData1 %>% arrange(country,year)
+```
+
+
+## pregunta 3
+
+
+```{r}
+wbData2 <- wbData1 %>% mutate(region = recode(region, 
+                                              "East Asia & Pacific" = "Este Asiatico y Pacifico", 
+                                              "Europe & Central Asia" = "Europa y Asia Central", 
+                                              "Latin American & Caribbean" = "America Latina y el Caribe", 
+                                              "Middle East & North Africa" = "Medio Oriente y Norte de Africa",
+                                              "North America" = "Norteamerica", 
+                                              "South Asia" = "Asia del Sur", 
+                                              "Sub-Sahara Africa" =  "Africa Subsahariana"))
+
+
+
+table(wbData2$region)
+
+regiones <- wbData2 %>% 
+            distinct(region) %>% 
+            count()
+
+
+regiones <- wbData2 %>% 
+            group_by(region) %>% 
+            count()
+
+
+wbData3 = wbData2 %>% 
+          filter(region != "Aggregates")
+
+
+
+```
+
+```{r}
+z  <- wbData2 %>% filter(is.na(region))
+z
+```
+
+
+```{r}
+wbData3 %>% distinct(country) %>% 
+            count()
+```
+
+```{r}
+wbData3 %>% group_by(region) %>% 
+            distinct(country) %>% 
+            count()
+
+```
+
+
+```{r}
+
+library(janitor)
+library(kableExtra)
+
+wbData3 %>% group_by(region) %>% 
+            distinct(country) %>% 
+            count() %>% 
+            adorn_totals("row") %>% 
+            kbl(booktabs = T,
+                col.names = c("region", "Numero paises"),
+                linesep = '') %>% 
+            kable_styling(latex_options = c("striped"))
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

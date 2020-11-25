@@ -18,6 +18,53 @@ library(dplyr)
 
 ```{r}
 wbData <- WDI(
-  indicator= c("SP.POP.TOTL", "SP.DYN.LEOO.IN", "NY.GDP.PCAP.PP.CD", "SI.POV.GINI"), contry = "all", extra = TRUE, start = 1960, end=2019
+  indicator= 
+    c("SP.POP.TOTL","SP.DYN.LE00.IN", "NY.GDP.PCAP.PP.CD", "SI.POV.GINI"), country = "all", extra = TRUE, start = 1960, end=2019
 )
 ```
+
+
+
+```{r}
+glimpse(wbData)
+```
+
+
+
+```{r}
+z <- wbData %>%  arrange(country, year)
+z
+```
+
+
+```{r}
+saveRDS(wbData, "datos/wbData2019.rds")
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
