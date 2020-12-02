@@ -240,8 +240,8 @@ muestra_total_tb %>%
 (j) Guardar un archivo muestra_total.csv
 
 ```{r}
-library(readr)
-write_csv(muestra_total_tb, path = "datos/muestra_total.csv")
+#library(readr)
+#write_csv(muestra_total_tb, path = "datos/muestra_total.csv")
 ```
 
 

@@ -55,7 +55,6 @@ wbData2 <- wbData1 %>% mutate(region = recode(region,
                                             "Sub-Sahara Africa" =  "Africa Subsahariana"))
 ``` 
  
- 
 ## pregunta 4
  
 ```{r}
