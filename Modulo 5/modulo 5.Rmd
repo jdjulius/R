@@ -1,0 +1,248 @@
+---
+title: "Untitled"
+author: "julio"
+date: "9/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(kableExtra)
+library(janitor)
+library(lubridate)
+library(tibble)
+library(stringr)
+
+```
+
+
+
+## MODULO 5
+
+# pregunta 1
+
+```{r}
+# CARGA DE DATOS
+
+p1 <- tibble(
+  
+  year = c(2018,2019,2020),
+  mes = c(5,8,6),
+  dia = c(20,12,4),
+  hora = c(19,4,6),
+  minuto = c(23,45,5),
+  segundo = c(44,12,53)
+)
+
+p1
+
+```
+
+```{r}
+# MANIPULACION DE DATOS
+
+p1_1 <- p1 %>% mutate(fecha = make_date(year,mes,dia),
+                         fecha_hora = make_datetime(year,mes,dia,hora,minuto,segundo))
+
+p1_1
+```
+
+
+
+# pregunta 2
+
+```{r}
+# CARGA DE DATOS
+
+p2 <- tibble(date_time=c("2018-05-20 12_56:32", "2019-08-12 04:23:45", "2020-06-04 19:43:09"))
+
+p2
+
+glimpse(p2)
+
+```
+
+```{r}
+# MANIPULACION DE DATOS
+
+p2 %>%  mutate(fecha = ymd_hms(date_time),
+                  fecha1 = as_date(fecha),
+                  fecha2 = stamp_date("28/09/2020")(fecha1),
+                  anio = year(fecha),
+                  mes = month(fecha, label= TRUE, abbr = FALSE),
+                  dia = day(fecha),
+                  dia_semana = wday (fecha, label= TRUE, abbr = FALSE)) %>%   
+                  flextable() %>% 
+                  autofit()
+
+```
+
+
+# pregunta 3
+
+
+
+```{r}
+# CARGA DE DATOS
+
+today()
+today() - ymd("2012-01-10")
+
+```
+
+
+# pregunta 5
+
+```{r}
+# CARGA DE DATOS
+
+# MANIPULACION DE DATOS
+p5 <- c("Argentina(1)", "Brazil", "El salvador", "Guatemala", "Honduras", "Uganda")
+
+```
+
+```{r}
+# (a)
+
+p5_a = str_replace_all(p5, pattern="[\\d\\(\\)]","")
+p5_a
+
+```
+
+```{r}
+# (b)
+
+p5_b = str_to_title(p5)
+p5_b
+```
+
+
+```{r}
+# (c)
+
+p5_c = str_to_upper(p5)
+p5_c
+```
+
+
+```{r}
+# (d)
+
+p5_d <- sum(str_detect(p5, "^[AEIOU]"))
+p5_d
+
+p5_d <- sum(str_detect(p5, "^[AEIOU].*[AEIOU]$"))
+p5_d
+```
+
+
+```{r}
+# (e)
+
+p5_e <- sum(str_detect(p5, "^[^AEIOU]"))
+p5_e
+
+p5_e <- sum(str_detect(p5, "^[^AEIOU].*[^aeiou]$"))
+p5_e
+
+p5_e <- sum(str_detect(p5, "[^(AEIOU|aeiou)]"))
+p5_e
+```
+```{r}
+# (f)
+
+p5_f <- str_subset(p5, "a$")
+p5_f
+
+```
+```{r}
+# (g)
+
+p5_g <- str_subset(p5, "^[AU]")
+p5_g
+
+```
+
+```{r}
+# (h)
+
+p5_h <- str_length(p5)
+p5_h
+
+p5_h = str_count(p5, "[a-zA-Záéíóú]")
+p5_h
+
+```
+
+
+
+```{r}
+# (i)
+
+p5_i <- mean(str_count(p5, "[aeiouAEIOU]"))
+p5_i
+
+```
+
+```{r}
+# (j)
+largo <- str_count(p5, "[a-zA-Z]")
+p5_i <- ceiling(largo/2)
+p5_i
+str_sub(p5,p5_i,p5_i)
+
+```
+
+```{r}
+# (k)
+
+str_subset(p5, "^[^AEIOU]{2}")
+
+```
+
+
+```{r}
+# (l)
+
+str_subset(p5, "^[AEIOU].*[aeiou]$")
+
+```
+
+# pregunta 6
+
+```{r}
+# CARGA DE DATOS
+
+# MANIPULACION DE DATOS
+p5 <- c("Argentina(1)", "Brazil", "El salvador", "Guatemala", "Honduras", "Uganda")
+
+```
+
+```{r}
+# (a)
+
+p5_a = str_replace_all(p5, pattern="[\\d\\(\\)]","")
+p5_a
+
+```
+
+
+
+# pregunta 6
+
+
+
+
+
+
+
+
+
+
+
+

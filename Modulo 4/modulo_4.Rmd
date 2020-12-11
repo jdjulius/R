@@ -1,0 +1,112 @@
+---
+title: "Modulo_4"
+author: "julio"
+date: "2/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+```{r}
+library(WDI)
+library(dplyr)
+library(flextable)
+```
+
+
+```{r}
+install.packages("flextable")
+```
+
+## MODULO 4
+
+# Carga de base de datos
+
+```{r}
+wbData <- WDI(
+  indicator= 
+    c("SP.POP.TOTL","SP.DYN.LE00.IN", "NY.GDP.PCAP.PP.CD", "SI.POV.GINI"), country = "all", extra = TRUE, start = 1960, end=2019
+)
+
+wbData <- wbData %>% rename(population = SP.POP.TOTL,
+                              lifeExpectancy = SP.DYN.LE00.IN,
+                              gdppc = NY.GDP.PCAP.PP.CD,
+                              gini = SI.POV.GINI)
+```
+
+# PREGUNTA 1
+
+```{r}
+wbData %>% filter(year == 2018) %>% 
+          group_by(region) %>% 
+          summarise(median_lifeExp = median(lifeExpectancy, na.rm = TRUE),
+                    min_lifeExp = min(lifeExpectancy, na.rm = TRUE),
+                    max_lifeExp = max(lifeExpectancy, na.rm = TRUE))
+```
+
+
+# PREGUNTA 2
+
+```{r}
+wbData %>% filter(year == 2018) %>% 
+          group_by(region) %>% 
+          summarise(median_lifeExp = median(lifeExpectancy, na.rm = TRUE),
+                    min_lifeExp = min(lifeExpectancy, na.rm = TRUE),
+                    max_lifeExp = max(lifeExpectancy, na.rm = TRUE)) %>% 
+  flextable() %>% 
+  set_header_labels(region = "region", median_lifeExp = "Mediana", min_lifeExp = "Min", max_lifeExp = "Max") %>% 
+  autofit()
+```
+
+# PREGUNTA 3
+
+```{r}
+
+```
+
+# PREGUNTA 4
+
+```{r}
+
+```
+
+# PREGUNTA 5
+
+```{r}
+
+```
+
+# PREGUNTA 6
+
+```{r}
+
+```
+
+# PREGUNTA 7
+
+```{r}
+
+```
+
+# PREGUNTA 8
+
+```{r}
+
+```
+
+# PREGUNTA 9
+
+```{r}
+
+```
+
+# PREGUNTA 10
+
+```{r}
+
+```
+
+

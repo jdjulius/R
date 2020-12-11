@@ -1,0 +1,138 @@
+---
+title: "modulo 5 - graficas"
+author: "julio"
+date: "9/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+```
+
+
+
+
+## PREGUNTA 1 ( STACK, DODGE, FILL)
+
+
+```{r}
+df1 <- tibble(
+  region = c("A","A","B","B","C","C"),
+  sexo = c("Hombres","Mujeres","Hombres","Mujeres","Hombres","Mujeres"),
+  casos = c(140, 60, 121, 99, 105, 195),
+  prop = c(70, 30, 55, 45, 35, 65)
+)
+```
+
+
+```{r}
+# GRAFICA DE BARRAS (STACK)
+df1 %>% ggplot(aes(x=region, y = casos, fill=sexo)) + 
+  geom_col(position = "stack")+ 
+  labs(title = "Ocupados por sexo y region",
+       subtitle = "2018",
+       x = "Region",
+       y = "Numero de personas") +
+  theme_tufte()
+```
+
+
+
+```{r}
+# GRAFICA DE BARRAS (DODGE)
+df1 %>% ggplot(aes(x=region, y = casos, fill=sexo)) + 
+  geom_col(position = "dodge2") + 
+  theme_minimal()
+```
+
+
+
+
+```{r}
+# GRAFICA DE BARRAS (DODGE)
+df1 %>% ggplot(aes(x=region, y = casos, fill=sexo)) + 
+  geom_col(position = "fill")+ 
+  theme_stata()
+```
+
+
+
+
+
+## PREGUNTA 2 ( STACK, DODGE, FILL)
+
+
+```{r}
+df2 <- tibble(
+  region = c("B","A","B","A","A","B","A","B","B","B"),
+  sexo = c("Mujeres","Mujeres","Hombres","Mujeres","Hombres","Mujeres","Mujeres","Hombres","Mujeres","Mujeres")
+)
+```
+
+```{r}
+df2 %>%  ggplot(aes(x=region,fill=sexo))+
+  geom_bar()+
+  theme_wsj()
+```
+
+
+```{r}
+df2 %>%  ggplot(aes(x=region,fill=sexo))+
+  geom_bar(position = "dodge")+
+  theme_wsj()
+```
+
+
+```{r}
+df2 %>%  ggplot(aes(x=region,fill=sexo))+
+  geom_bar(position = "fill")+
+  theme_wsj()
+```
+
+
+## PREGUNTA 3
+
+```{r}
+df <- tibble(
+  categoria = c("B","A", "D", "C", "E"),
+  prop = c(34,31,20,9,6)
+)
+```
+
+
+```{r}
+df %>%  ggplot(aes(x=categoria,y=prop))+
+  geom_col(fill = "#d95f0e", colour = "#000000")
+```
+
+
+
+```{r}
+df <- df %>% 
+  arrange(desc(categoria)) %>% 
+  mutate(ypos = cumsum(prop) - 0.5*prop)
+
+df %>% ggplot(aes(x=1,y=prop, fill = categoria))+
+  geom_col(colour = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(x = 1.1, y =ypos, label = paste0("Cat:",categoria, "\n",prop, "%")),colour = "white")+
+  theme_void()+
+  theme(legend.position = "none")
+
+```
+
+
+```{r}
+vals = c(´A´ = 31,´B´ = 31, ´C´ = 31, ´D´ = 31, ´E´ = 31)
+```
+
+
+
+
+
